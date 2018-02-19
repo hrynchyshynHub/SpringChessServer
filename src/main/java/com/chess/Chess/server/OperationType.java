@@ -1,6 +1,8 @@
 package com.chess.Chess.server;
 
-public enum OperationType {
+import java.io.Serializable;
+
+public enum OperationType implements Serializable {
     LOGIN,
     REGISTER_USER;
 

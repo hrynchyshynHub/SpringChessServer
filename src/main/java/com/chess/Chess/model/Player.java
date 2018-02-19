@@ -39,4 +39,11 @@ public class Player implements Serializable{
         this.secondName = secondName;
         this.password = password;
     }
+    public Player(String username, String firstName, String secondName, String password, Color color){
+        this.username = username;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.password = password;
+        this.color = color;
+    }
 }

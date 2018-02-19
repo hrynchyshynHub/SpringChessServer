@@ -1,6 +1,8 @@
 package com.chess.Chess.network;
 
-public enum RequestCode{
+import java.io.Serializable;
+
+public enum RequestCode implements Serializable {
     OK,
     ERROR,
     CONNECTION_ERROR;

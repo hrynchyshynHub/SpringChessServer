@@ -1,5 +1,7 @@
 package com.chess.Chess.util;
 
-public enum PieceType {
+import java.io.Serializable;
+
+public enum PieceType implements Serializable {
     PAWN;
 }

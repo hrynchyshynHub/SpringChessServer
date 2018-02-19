@@ -13,4 +13,8 @@ public class NetworkModelsUtil {
             player.getColor()
         );
     }
+
+    public static com.chess.Chess.model.Player convertToPlayer(Player player){
+        return new com.chess.Chess.model.Player(player.getUsername(), player.getFirstName(), player.getSecondName(), player.getPassword(), player.getColor());
+    }
 }

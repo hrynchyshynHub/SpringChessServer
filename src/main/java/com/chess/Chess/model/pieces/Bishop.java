@@ -3,6 +3,7 @@ package com.chess.Chess.model.pieces;
 import com.chess.Chess.model.Board;
 import com.chess.Chess.model.Cell;
 import com.chess.Chess.util.Color;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;

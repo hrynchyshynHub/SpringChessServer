@@ -7,15 +7,12 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by ivan.hrynchyshyn on 17.11.2017.
  */
-@Data
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+
 public abstract class Piece {
 
     private Color color;
@@ -25,6 +22,65 @@ public abstract class Piece {
 
     public Piece(Color color) {
         this.color = color;
+    }
+
+    public Piece(Color color, Cell currentCell, boolean available, List<String> availableCellsToMove) {
+        this.color = color;
+        this.currentCell = currentCell;
+        this.available = available;
+        this.availableCellsToMove = availableCellsToMove;
+    }
+
+    public Piece() {
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return available == piece.available &&
+            color == piece.color &&
+            Objects.equals(currentCell, piece.currentCell) &&
+            Objects.equals(availableCellsToMove, piece.availableCellsToMove);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(color, currentCell, available, availableCellsToMove);
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Cell getCurrentCell() {
+        return currentCell;
+    }
+
+    public void setCurrentCell(Cell currentCell) {
+        this.currentCell = currentCell;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public List<String> getAvailableCellsToMove() {
+        return availableCellsToMove;
+    }
+
+    public void setAvailableCellsToMove(List<String> availableCellsToMove) {
+        this.availableCellsToMove = availableCellsToMove;
     }
 
     /**

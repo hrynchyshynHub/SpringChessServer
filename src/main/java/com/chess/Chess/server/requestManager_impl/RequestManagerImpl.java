@@ -1,10 +1,10 @@
 package com.chess.Chess.server.requestManager_impl;
 
-import com.chess.Chess.server.OperationType;
 import com.chess.Chess.server.RequestHandler;
 import com.chess.Chess.server.RequestManager;
 import com.chess.Chess.server.requestHandlers_impl.LoginHandler;
 import com.chess.Chess.server.requestHandlers_impl.RegisterUserRequestHandler;
+import network.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

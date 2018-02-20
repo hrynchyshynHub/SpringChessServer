@@ -1,4 +1,4 @@
-package com.chess.Chess.network;
+package network;
 
 import java.io.Serializable;
 

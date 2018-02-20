@@ -19,11 +19,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Player save(Player player) {
-        return null;
+        System.out.println(player +  " into service mthod") ;
+        return playerRepository.save(player);
     }
 
     @Override
     public void delete(Player player) {
-
+        playerRepository.delete(player);
     }
 }

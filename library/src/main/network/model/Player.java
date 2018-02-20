@@ -1,48 +1,23 @@
-package com.chess.Chess.model;
-
-
-
-import com.chess.Chess.util.Color;
-import lombok.*;
-
-import javax.persistence.*;
+package network.model;
 import java.io.Serializable;
+import java.util.Objects;
 
-/**
- * Created by ivan.hrynchyshyn on 17.11.2017.
- */
-
-@Entity
-@Table(name = "players")
-public class Player implements Serializable{
-
-    @Id
-    @GeneratedValue
+public class Player implements Serializable {
     private Long id;
     private String username;
     private String firstName;
     private String secondName;
     private String password;
-    private Color color;
 
-
+    public Player(Long id, String username, String firstName, String secondName, String password) {
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.password = password;
+    }
 
     public Player() {
-    }
-
-    public Player(String username, String firstName, String secondName, String password){
-        this.username = username;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.password = password;
-    }
-
-    public Player(String username, String firstName, String secondName, String password, Color color){
-        this.username = username;
-        this.firstName = firstName;
-        this.secondName = secondName;
-        this.password = password;
-        this.color = color;
     }
 
     public Long getId() {
@@ -85,11 +60,22 @@ public class Player implements Serializable{
         this.password = password;
     }
 
-    public Color getColor() {
-        return color;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(id, player.id) &&
+            Objects.equals(username, player.username) &&
+            Objects.equals(firstName, player.firstName) &&
+            Objects.equals(secondName, player.secondName) &&
+            Objects.equals(password, player.password);
     }
 
-    public void setColor(Color color) {
-        this.color = color;
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, username, firstName, secondName, password);
     }
 }

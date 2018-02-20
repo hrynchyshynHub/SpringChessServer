@@ -17,6 +17,11 @@ public class Player implements Serializable {
         this.password = password;
     }
 
+    public Player(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
     public Player() {
     }
 

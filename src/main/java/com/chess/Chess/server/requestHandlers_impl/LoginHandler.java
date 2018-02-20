@@ -23,15 +23,14 @@ public class LoginHandler implements RequestHandler{
     @Override
     public void execute(ObjectInputStream ois, ObjectOutputStream oos) {
        try{
-           String username = (String) ois.readObject();
-           String password = (String) ois.readObject();
+           network.model.Player receivedPlayer = (network.model.Player) ois.readObject();
 
-           Player user = userService.findByUsername(username);
+           Player user = userService.findByUsername(receivedPlayer.getUsername());
 
            if (user == null) {
                oos.writeObject(new Response(RequestCode.ERROR, "No such user in database"));
                return;
-           } else if (!user.getPassword().equals(password)) {
+           } else if (!user.getPassword().equals(receivedPlayer.getPassword())) {
                oos.writeObject(new Response(RequestCode.ERROR, "Incorrect password"));
                return;
            }

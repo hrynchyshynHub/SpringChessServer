@@ -6,6 +6,7 @@ import com.chess.Chess.model.Player;
 import com.chess.Chess.server.RequestHandler;
 import com.chess.Chess.service.UserService;
 import com.chess.Chess.service.impl.ChessGameEngine;
+import com.sun.org.apache.xpath.internal.operations.String;
 import network.RequestCode;
 import network.Response;
 import org.apache.log4j.Logger;
@@ -39,12 +40,12 @@ public class CreateGameRequestHandler implements RequestHandler {
 
             logger.info("User " + user.getUsername() + " created game");
 
-            chessGameEngine.setWhitePlayer(user);
-
-            oos.writeObject(new Response(RequestCode.OK));
-
-
-
+            if(chessGameEngine.isPosibleToConnect()){
+                chessGameEngine.setWhitePlayer(user);
+                oos.writeObject(new Response(RequestCode.OK));
+            }else{
+                oos.writeObject(new Response(RequestCode.ERROR));
+            }
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }

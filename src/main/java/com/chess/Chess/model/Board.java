@@ -21,25 +21,19 @@ public class Board implements GameBoard{
 
    @Override
    public void initializeBoard() {
-      boolean isWhite = true;
       Color color = Color.WHITE;
-      for (int i = 7; i >= 0; i--) {
-         for (int j = 0; j < 8; j++) {
-            isWhite = !isWhite;
-            if( j == 7){
-               isWhite = !isWhite;
-            }
-            if(isWhite){
-                  color = Color.BLACK;
-               }else{
-                  color = Color.WHITE;
+       for(int i = 7; i >= 0 ; i--){
+           for(int j = 0; j < 8; j++){
+               if ((j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0)) {
+                   color = Color.WHITE;
+               } else {
+                   color = Color.BLACK;
                }
-               cells[i][j] = new Cell(i, (char) (j + 97), color);
-               System.out.print('[' + cells[i][j].getId() + ' ' + cells[i][j].getColor() + ']');
-         }
-         System.out.println();
-      }
-
+               cells[i][j] = new Cell(i, (char) (j + 97),color);
+               System.out.print('[' + cells[i][j].getId() + cells[i][j].getColor() + ']'  );
+           }
+           System.out.println();
+       }
    }
 
    @Override

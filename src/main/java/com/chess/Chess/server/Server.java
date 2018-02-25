@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -21,6 +23,9 @@ public class Server {
 
     @Autowired
     private RequestManager requestManager;
+
+    private List<ClientRunnable> clients = new ArrayList<>();
+
 
     private class ClientRunnable implements Runnable {
         private Socket clientSocket;
@@ -62,7 +67,10 @@ public class Server {
 
             while (!listener.isClosed()) {
                 Socket socket = listener.accept();
-                threadPoolExecutor.execute(new ClientRunnable(socket));
+                ClientRunnable clientRunnable = new ClientRunnable(socket);
+                clients.add(clientRunnable);
+                threadPoolExecutor.execute(clientRunnable);
+                clients.forEach(System.out::println);
             }
 
             threadPoolExecutor.shutdown();

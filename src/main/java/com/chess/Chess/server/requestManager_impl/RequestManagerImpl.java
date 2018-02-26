@@ -2,10 +2,7 @@ package com.chess.Chess.server.requestManager_impl;
 
 import com.chess.Chess.server.RequestHandler;
 import com.chess.Chess.server.RequestManager;
-import com.chess.Chess.server.requestHandlers_impl.CreateGameRequestHandler;
-import com.chess.Chess.server.requestHandlers_impl.LoginHandler;
-import com.chess.Chess.server.requestHandlers_impl.MoveRequestImpl;
-import com.chess.Chess.server.requestHandlers_impl.RegisterUserRequestHandler;
+import com.chess.Chess.server.requestHandlers_impl.*;
 import network.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +22,12 @@ public class RequestManagerImpl implements RequestManager {
     @Autowired
     private CreateGameRequestHandler createGameRequestHandler;
 
+    @Autowired
+    private JoinGameRequestHandler joinGameRequestHandler;
+
+    @Autowired
+    private GetAvailableGamesRequestHandler getAvailableGamesRequestHandler;
+
     @Override
     public RequestHandler handleRequest(OperationType type) {
         switch (type){
@@ -36,6 +39,10 @@ public class RequestManagerImpl implements RequestManager {
                 return createGameRequestHandler;
             case TRY_MOVE:
                 return  moveRequestHandler;
+            case JOIN_GAME:
+                return joinGameRequestHandler;
+            case GET_AVAILABLE_GAMES:
+                return getAvailableGamesRequestHandler;
         }
         return null;
     }

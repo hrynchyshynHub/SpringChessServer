@@ -7,17 +7,29 @@ import com.chess.Chess.util.Color;
 import com.chess.Chess.util.Move;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by ivan.hrynchyshyn on 15.11.2017.
  */
 public class Board implements GameBoard{
+   private static AtomicInteger id = new AtomicInteger();
+
+   private int uniqueId;
    private Cell[][] cells = new Cell[8][8];
    private Player whitePlayer;
    private Player blackPlayer;
    private boolean isWin;
    private Queue<Move> moves = new PriorityQueue<>();
    private Map<Piece, Cell> piecesOnBoardDefault = new HashMap<>();
+
+
+   public Board(){
+      uniqueId = id.incrementAndGet();
+      initializeBoard();
+      initializatePieces(Color.WHITE);
+      initializatePieces(Color.BLACK);
+   }
 
    @Override
    public void initializeBoard() {
@@ -122,4 +134,31 @@ public class Board implements GameBoard{
       piecesOnBoardDefault.put(piece, cell);
    }
 
+   public int getId() {
+      return uniqueId;
+   }
+
+   public Player getWhitePlayer() {
+      return whitePlayer;
+   }
+
+   public void setWhitePlayer(Player whitePlayer) {
+      this.whitePlayer = whitePlayer;
+   }
+
+   public Player getBlackPlayer() {
+      return blackPlayer;
+   }
+
+   public void setBlackPlayer(Player blackPlayer) {
+      this.blackPlayer = blackPlayer;
+   }
+
+   @Override
+   public String toString() {
+      return "Board{" + uniqueId +
+          "whitePlayer=" + whitePlayer +
+          ", blackPlayer=" + blackPlayer +
+          '}';
+   }
 }

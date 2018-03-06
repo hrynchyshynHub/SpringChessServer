@@ -83,4 +83,9 @@ public class Player implements Serializable {
 
         return Objects.hash(id, username, firstName, secondName, password);
     }
+
+    @Override
+    public String toString() {
+        return getUsername();
+    }
 }

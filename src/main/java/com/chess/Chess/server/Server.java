@@ -24,9 +24,6 @@ public class Server {
     @Autowired
     private RequestManager requestManager;
 
-    private List<ClientRunnable> clients = new ArrayList<>();
-
-
     private class ClientRunnable implements Runnable {
         private Socket clientSocket;
 
@@ -68,9 +65,7 @@ public class Server {
             while (!listener.isClosed()) {
                 Socket socket = listener.accept();
                 ClientRunnable clientRunnable = new ClientRunnable(socket);
-                clients.add(clientRunnable);
                 threadPoolExecutor.execute(clientRunnable);
-                clients.forEach(System.out::println);
             }
 
             threadPoolExecutor.shutdown();

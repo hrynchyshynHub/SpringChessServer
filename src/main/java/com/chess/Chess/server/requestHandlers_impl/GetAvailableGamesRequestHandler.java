@@ -6,6 +6,7 @@ import com.chess.Chess.server.RequestHandler;
 import com.chess.Chess.service.UserService;
 import com.chess.Chess.service.impl.ChessGameEngine;
 import com.chess.Chess.util.NetworkModelsUtil;
+import com.sun.org.apache.xerces.internal.xs.StringList;
 import network.RequestCode;
 import network.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -40,7 +42,7 @@ public class GetAvailableGamesRequestHandler implements RequestHandler {
             if(boards.size() != 0 ){
                 oos.writeObject(new Response(RequestCode.OK, NetworkModelsUtil.convertToNetworkBoards(boards)));
             }else{
-                oos.writeObject(new Response(RequestCode.ERROR, "No available games found. Create game first"));
+                oos.writeObject(new Response(RequestCode.ERROR, new ArrayList<>()));
                 return;
             }
 

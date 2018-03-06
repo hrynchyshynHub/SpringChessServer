@@ -7,6 +7,7 @@ import com.chess.Chess.service.impl.ChessGameEngine;
 import com.chess.Chess.util.NetworkModelsUtil;
 import network.RequestCode;
 import network.Response;
+import network.model.NetworkGameBoard;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,23 +31,19 @@ public class JoinGameRequestHandler implements RequestHandler {
     @Override
     public void execute(ObjectInputStream ois, ObjectOutputStream oos) {
         try{
-            network.model.Player receivedPlayer = (network.model.Player) ois.readObject();
-            Player user = userService.findByUsername(receivedPlayer.getUsername());
 
-//            if(chessGameEngine.isPosibleToConnect()){
-//                logger.info("Is posible to connect to server...");
-//                if(chessGameEngine.getBlackPlayer() == null){
-//                    chessGameEngine.setBlackPlayer(NetworkModelsUtil.convertToPlayer(receivedPlayer));
-//                }else if(chessGameEngine.getWhitePlayer() == null){
-//                    chessGameEngine.setWhitePlayer(NetworkModelsUtil.convertToPlayer(receivedPlayer));
-//                }
-//                //TODO: check if the user is not the same
-//
-//                oos.writeObject(new Response(RequestCode.OK,"You are connected"));
-//
-//            }else{
-//                oos.writeObject(new Response(RequestCode.ERROR, "Board is occupied by other players"));
-//            }
+            NetworkGameBoard networkGameBoard = (NetworkGameBoard)ois.readObject();
+
+
+            if(chessGameEngine.isPosibleToConnect(networkGameBoard.getId())){
+                logger.info("Is posible to connect to server...");
+                chessGameEngine.connect(NetworkModelsUtil.convertToPlayer(networkGameBoard.getSecondPlayer()), networkGameBoard.getId());
+
+                oos.writeObject(new Response(RequestCode.OK,"You are connected"));
+
+            }else{
+                oos.writeObject(new Response(RequestCode.ERROR, "Board is occupied by other players"));
+            }
 
         }catch (IOException | ClassNotFoundException e){
             e.printStackTrace();

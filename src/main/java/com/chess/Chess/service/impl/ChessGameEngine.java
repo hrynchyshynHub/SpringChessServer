@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ChessGameEngine {
 
-    private List<Board> boards = new ArrayList<>();;
+    private List<Board> boards = new ArrayList<>();
 
     public void createNewBoard(Player player){
         Board board = new Board();
@@ -20,7 +21,7 @@ public class ChessGameEngine {
     }
 
     public List<Board> getAvailableBoards(){
-        return boards;
+        return boards.stream().filter(x-> x.getBlackPlayer() == null).collect(Collectors.toList());
     }
 
     public Board getBoardById(int id){

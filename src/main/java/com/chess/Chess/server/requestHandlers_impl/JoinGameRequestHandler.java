@@ -39,7 +39,7 @@ public class JoinGameRequestHandler implements RequestHandler {
                 logger.info("Is posible to connect to server...");
                 chessGameEngine.connect(NetworkModelsUtil.convertToPlayer(networkGameBoard.getSecondPlayer()), networkGameBoard.getId());
 
-                oos.writeObject(new Response(RequestCode.OK,"You are connected"));
+                oos.writeObject(new Response(RequestCode.OK, networkGameBoard));
 
             }else{
                 oos.writeObject(new Response(RequestCode.ERROR, "Board is occupied by other players"));

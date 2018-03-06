@@ -28,6 +28,9 @@ public class RequestManagerImpl implements RequestManager {
     @Autowired
     private GetAvailableGamesRequestHandler getAvailableGamesRequestHandler;
 
+    @Autowired
+    private SelectCellRequestHandler selectCellRequestHandler;
+
     @Override
     public RequestHandler handleRequest(OperationType type) {
         switch (type){
@@ -39,6 +42,8 @@ public class RequestManagerImpl implements RequestManager {
                 return createGameRequestHandler;
             case TRY_MOVE:
                 return  moveRequestHandler;
+            case SELECT_CELL:
+                return  selectCellRequestHandler;
             case JOIN_GAME:
                 return joinGameRequestHandler;
             case GET_AVAILABLE_GAMES:

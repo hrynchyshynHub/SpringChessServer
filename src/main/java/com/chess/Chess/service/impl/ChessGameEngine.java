@@ -14,10 +14,11 @@ public class ChessGameEngine {
 
     private List<Board> boards = new ArrayList<>();
 
-    public void createNewBoard(Player player){
+    public Board createNewBoard(Player player){
         Board board = new Board();
         board.setWhitePlayer(player);
         boards.add(board);
+        return board;
     }
 
     public List<Board> getAvailableBoards(){

@@ -20,6 +20,7 @@ public class Board implements GameBoard{
    private Player whitePlayer;
    private Player blackPlayer;
    private boolean isWin;
+   private Cell selectedCell;
    private Queue<Move> moves = new PriorityQueue<>();
    private Map<Piece, Cell> piecesOnBoardDefault = new HashMap<>();
 
@@ -152,6 +153,14 @@ public class Board implements GameBoard{
 
    public void setBlackPlayer(Player blackPlayer) {
       this.blackPlayer = blackPlayer;
+   }
+
+   public Cell getSelectedCell() {
+      return selectedCell;
+   }
+
+   public void setSelectedCell(Cell selectedCell) {
+      this.selectedCell = selectedCell;
    }
 
    @Override

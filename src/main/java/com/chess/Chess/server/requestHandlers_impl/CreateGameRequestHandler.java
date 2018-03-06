@@ -9,10 +9,11 @@ import com.chess.Chess.service.impl.ChessGameEngine;
 import com.sun.org.apache.xpath.internal.operations.String;
 import network.RequestCode;
 import network.Response;
+import network.model.NetworkGameBoard;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
+import com.chess.Chess.util.NetworkModelsUtil;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -39,8 +40,8 @@ public class CreateGameRequestHandler implements RequestHandler {
             Player user = userService.findByUsername(receivedPlayer.getUsername());
 
             logger.info("User " + user.getUsername() + " created game");
-            chessGameEngine.createNewBoard(user);
-            oos.writeObject(new Response(RequestCode.OK));
+            Board board = chessGameEngine.createNewBoard(user);
+            oos.writeObject(new Response(RequestCode.OK, new NetworkGameBoard(board.getId(), null, null)));
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();

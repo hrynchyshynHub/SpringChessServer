@@ -1,10 +1,12 @@
 package com.chess.Chess.server;
 
+import com.chess.Chess.ChessApplication;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 @Component
@@ -18,7 +20,8 @@ public class ApplicationProperties {
         static {
             try {
                 Properties properties = new Properties();
-                properties.load(new FileInputStream("config.properties"));
+                InputStream is = ChessApplication.class.getResourceAsStream("/config.properties");
+                properties.load(is);
                 port = Integer.valueOf(properties.getProperty("port"));
                 poolSize = Integer.valueOf(properties.getProperty("poolSize"));
                 timeToKeepAlive = Long.valueOf(properties.getProperty("timeToKeepAlive"));

@@ -25,10 +25,6 @@ public class Rock extends Piece {
         }
     }
 
-    @Override
-    public Cell move(Board board, Cell destinationCell) {
-        return null;
-    }
 
     @Override
     public List<String> getAvailableCellsToMove(Board board) {

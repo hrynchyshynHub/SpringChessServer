@@ -25,22 +25,6 @@ public class Bishop extends Piece{
         }
     }
 
-    @Override
-    public Cell move(Board board, Cell destinationCell) {
-        List<String> availableCellsToMove = getAvailableCellsToMove(board);
-        for(String id: availableCellsToMove){
-            if(destinationCell.getId().equalsIgnoreCase(id)){
-                setCurrentCell(destinationCell);
-                Piece piece = board.getCellById(id).getPiece();
-                if(piece != null ){
-                    piece.setAvailable(false); // Remove old piece
-                }
-                board.getCellById(id).setPiece(this);
-                return destinationCell;
-            }
-        }
-        return currentCell;
-    }
 
     @Override
     public List<String> getAvailableCellsToMove(Board board) {

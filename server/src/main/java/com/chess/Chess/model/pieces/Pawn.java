@@ -30,24 +30,6 @@ public class Pawn extends Piece {
         }
     }
 
-    @Override
-    public Cell move(Board board, Cell destinationCell) {
-        List<String> availableCellToMove = getAvailableCellsToMove(board);
-        for (String id : availableCellToMove) {
-            if (destinationCell.getId().equalsIgnoreCase(id)) {
-                this.setCurrentCell(destinationCell);
-                Piece piece = board.getCellById(id).getPiece();
-                if (piece != null) {
-                    System.out.println("old piece = " + piece);
-                    piece.setAvailable(false);                       // old figure dead
-                }
-                board.getCellById(id).setPiece(this);
-                isFirstMove = false;
-                return destinationCell;
-            }
-        }
-        return currentCell;
-    }
 
 
     @Override

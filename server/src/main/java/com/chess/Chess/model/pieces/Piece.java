@@ -90,7 +90,22 @@ public abstract class Piece {
     public abstract List<String> getAvailableCellsToMove(Board board); /**state is board state in current time; */
 
 
-    public abstract Cell move(Board board, Cell destinationCell); /**state is board state in current time; */
+    public Cell move(Board board, Cell destinationCell){
+        List<String> availableCellToMove = getAvailableCellsToMove(board);
+        for (String id : availableCellToMove) {
+            if (destinationCell.getId().equalsIgnoreCase(id)) {
+                this.setCurrentCell(destinationCell);
+                Piece piece = board.getCellById(id).getPiece();
+                if (piece != null) {
+                    System.out.println("old piece = " + piece);
+                    piece.setAvailable(false);                       // old figure dead
+                }
+                board.getCellById(id).setPiece(this);
+                return destinationCell;
+            }
+        }
+        return currentCell;
+    }
 
     public abstract Deque<Cell> getDefaultCellStack();
 

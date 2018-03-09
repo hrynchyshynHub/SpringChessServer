@@ -1,0 +1,8 @@
+.black{
+    -fx-background-color: white;
+    -fx-background-repeat: no-repeat;
+}
+.white{
+    -fx-background-color: green;
+    -fx-background-repeat: no-repeat;
+}

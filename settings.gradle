@@ -1,0 +1,5 @@
+rootProject.name = 'gradle-multi-app'
+
+include "client"
+include "common"
+include "server"

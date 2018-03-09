@@ -18,7 +18,7 @@ public class ApplicationProperties {
         static {
             try {
                 Properties properties = new Properties();
-                properties.load(new FileInputStream("/config.properties"));
+                properties.load(new FileInputStream("config.properties"));
                 port = Integer.valueOf(properties.getProperty("port"));
                 poolSize = Integer.valueOf(properties.getProperty("poolSize"));
                 timeToKeepAlive = Long.valueOf(properties.getProperty("timeToKeepAlive"));

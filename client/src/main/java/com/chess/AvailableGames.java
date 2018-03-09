@@ -3,7 +3,6 @@ package com.chess;
 import com.chess.config.MainConfig;
 import com.chess.controller_elements.Util;
 import com.chess.model.ChessBoard;
-import com.chess.network.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

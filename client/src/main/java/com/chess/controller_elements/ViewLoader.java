@@ -17,7 +17,7 @@ public class ViewLoader {
     }
 
     public void loadScene(String path, String title) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(path));
         Parent root;
 
         try {

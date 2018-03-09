@@ -1,29 +1,23 @@
 package com.chess;
 
-import com.chess.config.ApplicationProperties;
 import com.chess.config.MainConfig;
 import com.chess.controller_elements.Util;
 import com.chess.controller_elements.ViewLoader;
 import com.chess.model.ChessBoard;
-import com.chess.network.Client;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import network.OperationType;
 import network.RequestCode;
 import network.Response;
 import network.model.NetworkGameBoard;
-
-import java.io.IOException;
 
 
 /**
@@ -68,7 +62,7 @@ public class MenuControlller {
 
     public void loadGame(ActionEvent event){
         ViewLoader viewLoader = new ViewLoader((Node) event.getSource());
-        viewLoader.loadScene("../view/availableGames.fxml", "Games");
+        viewLoader.loadScene("view/availableGames.fxml", "Games");
     }
 
     public void exit(ActionEvent event){

@@ -1,4 +1,4 @@
-package com.chess.network;
+package com.chess;
 
 import com.sun.istack.internal.NotNull;
 import com.chess.config.ApplicationProperties;

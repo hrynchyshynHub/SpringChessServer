@@ -1,6 +1,6 @@
 package com.chess;
 
-import com.sun.istack.internal.NotNull;
+import javax.validation.constraints.NotNull;
 import com.chess.config.ApplicationProperties;
 import com.chess.controller_elements.Util;
 import network.OperationType;

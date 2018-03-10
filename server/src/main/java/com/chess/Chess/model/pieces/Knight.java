@@ -84,9 +84,4 @@ public class Knight extends Piece {
         return "Knight";
     }
 
-    public static void main(String[] args) {
-        Board b =new Board();
-        Knight k = new Knight(Color.WHITE);
-        k.getAvailableCellsToMove(b);
-    }
 }

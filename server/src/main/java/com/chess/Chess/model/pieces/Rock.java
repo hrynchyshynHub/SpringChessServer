@@ -34,13 +34,35 @@ public class Rock extends Piece {
         int xPos = currentCell.getX();
         char yPos = currentCell.getY();
 
-        for(int i = 1; i <= 8 ; i++){
-            System.out.println(new String(i + "" + yPos));
+        for(int i = xPos; i <= 8 ; i++){
+            Piece piece = board.getCellById(new String(i + "" + yPos)).getPiece();
+            if(piece == null){
+                availableCellsToMove.add(new String(i+""+yPos));
+            }else
+                break;
         }
-        for(char a = 'a'; a <= 'h'; a++){
-            System.out.println(new String(xPos + "" + a));
+        for(int i = xPos; i > 0 ; i--){
+            Piece piece = board.getCellById(new String(i + "" + yPos)).getPiece();
+            if(piece == null){
+                availableCellsToMove.add(new String(i+""+yPos));
+            }else
+                break;
         }
-        //TODO: implement logic for check piece barrier and adding to list availableCellsToMove;
+
+        for(char a = yPos ; a <= 'h'; a++){
+            Piece piece = board.getCellById(new String(xPos + "" + a)).getPiece();
+            if(piece == null){
+                availableCellsToMove.add(new String(xPos+""+a));
+            }else
+                break;
+        }
+        for(char a = yPos ; a > 'a'; a--){
+            Piece piece = board.getCellById(new String(xPos + "" + a)).getPiece();
+            if(piece == null){
+                availableCellsToMove.add(new String(xPos+""+a));
+            }else
+                break;
+        }
         return availableCellsToMove;
     }
 
@@ -54,9 +76,4 @@ public class Rock extends Piece {
         return "Rock";
     }
 
-    public static void main(String[] args) {
-        Board b =new Board();
-        Rock rock = new Rock(Color.WHITE);
-        rock.getAvailableCellsToMove(b);
-    }
 }

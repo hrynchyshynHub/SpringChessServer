@@ -22,10 +22,10 @@ public class MainController {
 
         if(event.getSource() == btnLogin){
              stage = (Stage)btnLogin.getScene().getWindow();
-             root = FXMLLoader.load(getClass().getResource("view/Login.fxml"));
+             root = FXMLLoader.load(getClass().getClassLoader().getResource("view/Login.fxml"));
         }else{
             stage = (Stage)btnRegister.getScene().getWindow();
-            root = FXMLLoader.load(getClass().getResource("view/Register.fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("view/Register.fxml"));
         }
         Scene scene = new Scene(root);
         stage.setScene(scene);

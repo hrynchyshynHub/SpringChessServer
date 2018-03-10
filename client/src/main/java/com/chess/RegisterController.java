@@ -3,15 +3,12 @@ package com.chess;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import com.chess.config.MainConfig;
 import com.chess.controller_elements.Util;
-import com.chess.controller_elements.ViewLoader;
-import com.chess.network.Client;
 import javafx.stage.Stage;
 import network.OperationType;
 import network.RequestCode;
@@ -64,7 +61,7 @@ public class RegisterController {
             player = (Player) response.getData();
             MainConfig.setUser(player);
             Stage stage = (Stage) this.cancelButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("view/Menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/Menu.fxml"));
             stage.setScene(new Scene(root, 1400, 800));
             stage.show();
         }
@@ -72,7 +69,7 @@ public class RegisterController {
 
     public void back(ActionEvent event) throws IOException {
         Stage stage = (Stage) this.cancelButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("view/Main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/Main.fxml"));
         stage.setScene(new Scene(root, 1400, 800));
         stage.show();
     }

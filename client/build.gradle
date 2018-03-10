@@ -2,7 +2,11 @@ group 'com.parishioners.eleks'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
-
+idea {
+    module {
+        outputDir file('out')
+    }
+}
 sourceCompatibility = 1.8
 
 repositories {

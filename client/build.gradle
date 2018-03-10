@@ -1,0 +1,20 @@
+group 'com.parishioners.eleks'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+idea {
+    module {
+        outputDir file('out')
+    }
+}
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile project (':common')
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

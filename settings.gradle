@@ -1,3 +1,5 @@
-rootProject.name = 'gs-multi-module'
-include 'library'
-include 'application'
+rootProject.name = 'gradle-multi-app'
+
+include "client"
+include "common"
+include "server"

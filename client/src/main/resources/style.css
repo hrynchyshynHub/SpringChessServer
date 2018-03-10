@@ -1,0 +1,20 @@
+#scene{
+    -fx-background-image: url("railway.jpg");
+    -fx-background-repeat: stretch;
+    -fx-background-size:  1900 1080;
+    -fx-background-position: center center;
+    -fx-border-insets: 5px;
+}
+
+.text-field:error{
+    -fx-background-color: red;
+    -fx-text-box-border: red ;
+    -fx-focus-color: red ;
+}
+
+.button ,.text-field{
+//    -fx-max-width: 300;
+    -fx-padding: 10px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}

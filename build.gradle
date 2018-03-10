@@ -1,53 +1,58 @@
 buildscript {
-	ext {
-		springBootVersion = '1.5.10.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}./src/main/resources
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
-
+    ext {
+        depManagementVersion = "2.0.0.RELEASE"
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+//        classpath ("io.spring.gradle:dependency-management-plugin:${depManagementVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${depManagementVersion}")
+    }
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'org.springframework.boot'
-
-
-group = 'com.chess'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
-
-jar {
-	baseName = 'gs-multi-module-application'
-	version = '0.0.1-SNAPSHOT'
+allprojects {
+    group 'com.parishioners.eleks'
+    version '1.0-SNAPSHOT'
 }
 
-repositories {
-	mavenCentral()
-}
+subprojects {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
 
-task fatJar(type: Jar) {
-	manifest {
-		attributes 'Implementation-Title': 'Gradle Jar File Example',
-				'Implementation-Version': version,
-				'Main-Class': 'com.chess.Chess.ChessApplication'
-	}
-	baseName = project.name + '-all'
-	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
-	with jar
-}
-dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-websocket', version: '1.5.7.RELEASE'
-	compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.0'
-	compile group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '1.3.0.RELEASE'
-	compile project(':library')
-	compileOnly('org.projectlombok:lombok')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	compile group: 'com.h2database', name: 'h2', version: '1.3.148'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
+    ext {
+        SLF4J_VERSION = '1.7.10'
+        JUNIT_VERSION = '4.12'
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom 'io.spring.platform:platform-bom:Brussels-SR7'
+        }
+    }
+
+    dependencies {
+//        compile "org.slf4j:slf4j-api:${SLF4J_VERSION}"
+//        compile "org.slf4j:slf4j-log4j12:${SLF4J_VERSION}"
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+        compile group: 'org.springframework.boot', name: 'spring-boot-starter-websocket'
+        compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.0'
+        compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
+        compile group: 'com.h2database', name: 'h2', version: '1.4.196'
+
+        compileOnly('org.projectlombok:lombok')
+
+        testCompile "junit:junit:${JUNIT_VERSION}"
+    }
 }

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" prefHeight="800.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chess.MenuControlller">
+   <children>
+      <Label contentDisplay="CENTER" layoutX="380.0" layoutY="14.0" prefHeight="38.0" prefWidth="136.0" text="Main Menu" textAlignment="CENTER">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnNewGame" layoutX="219.0" layoutY="72.0" mnemonicParsing="false" onAction="#newGame" prefHeight="25.0" prefWidth="418.0" text="New Game" />
+      <Button fx:id="btnLoadGame" layoutX="219.0" layoutY="112.0" mnemonicParsing="false" onAction="#loadGame" prefHeight="25.0" prefWidth="418.0" text="Join Game" />
+      <Button fx:id="btnExit" layoutX="219.0" layoutY="152.0" mnemonicParsing="false" onAction="#exit" prefHeight="25.0" prefWidth="418.0" text="Exit" />
+   </children>
+</AnchorPane>

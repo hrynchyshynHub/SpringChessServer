@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.chess.AvailableGames">
+   <children>
+      <TableView fx:id="tableView" layoutX="139.0" layoutY="70.0" prefHeight="234.0" prefWidth="312.0">
+         <columns>
+            <TableColumn prefWidth="80.0" text="Game Id" fx:id="idColumn" />
+            <TableColumn prefWidth="150.0" text="First Player" fx:id="firstPlayer" />
+         </columns>
+      </TableView>
+      <Label layoutX="142.0" layoutY="27.0" prefHeight="36.0" prefWidth="312.0" text="Choose your opponent " textAlignment="CENTER">
+         <font>
+            <Font name="Calibri" size="26.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

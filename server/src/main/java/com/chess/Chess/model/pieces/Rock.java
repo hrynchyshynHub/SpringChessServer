@@ -38,30 +38,52 @@ public class Rock extends Piece {
             Piece piece = board.getCellById(new String(i + "" + yPos)).getPiece();
             if(piece == null){
                 availableCellsToMove.add(new String(i+""+yPos));
-            }else
-                break;
+            }else{
+                if(piece.getColor() != getColor()){
+                    availableCellsToMove.add(new String(i+""+yPos));
+                    break;
+                }else{
+                    break;
+                }
+            }
         }
         for(int i = xPos; i > 0 ; i--){
             Piece piece = board.getCellById(new String(i + "" + yPos)).getPiece();
             if(piece == null){
                 availableCellsToMove.add(new String(i+""+yPos));
-            }else
-                break;
+            }else{
+                if (piece.getColor() != getColor()){
+                   availableCellsToMove.add(new String(i+""+yPos));
+                   break;
+                }else
+                    break;
+            }
         }
 
-        for(char a = yPos ; a <= 'h'; a++){
+        for (char a = yPos; a <= 'h'; a++) {
             Piece piece = board.getCellById(new String(xPos + "" + a)).getPiece();
-            if(piece == null){
-                availableCellsToMove.add(new String(xPos+""+a));
-            }else
-                break;
+            if (piece == null) {
+                availableCellsToMove.add(new String(xPos + "" + a));
+            } else {
+                if (piece.getColor() != getColor()) {
+                    availableCellsToMove.add(new String(xPos + "" + a));
+                    break;
+                } else
+                    break;
+            }
         }
         for(char a = yPos ; a > 'a'; a--){
             Piece piece = board.getCellById(new String(xPos + "" + a)).getPiece();
             if(piece == null){
                 availableCellsToMove.add(new String(xPos+""+a));
-            }else
-                break;
+            }else{
+                if(piece.getColor() != getColor()){
+                    availableCellsToMove.add(new String(xPos+""+a));
+                    break;
+                }else{
+                    break;
+                }
+            }
         }
         return availableCellsToMove;
     }

@@ -32,34 +32,78 @@ public class Bishop extends Piece{
         Cell currentCell = getCurrentCell();
         int xPos = currentCell.getX();
         char yPos = currentCell.getY();
-        System.out.println(currentCell.toString());
-//        int[] rows = new int[]{1,2,3,4,5,6,7,8};
-//        char[] columns = new char[]{'a','b','c','d','e','f','g','h'};
+
         int step = 0;
+
         for (int i = xPos + 1; i <= 8; i++) {
             step++;
-//               System.out.println(i + " " + (char)(yPos + step) + " -- left up");
             String rightUpCell = new String(i + "" + (char) (yPos + step));
-            String leftUpCell = new String(i + "" + (char) (yPos - step));
-            if (board.getCellById(rightUpCell) != null && board.getCellById(rightUpCell).getPiece() == null) {
-                availableCellsToMove.add(rightUpCell);
-            }
-            if (board.getCellById(leftUpCell) != null && board.getCellById(leftUpCell).getPiece() == null) {
-                availableCellsToMove.add(leftUpCell);
+            if (board.getCellById(rightUpCell) != null){
+                Piece piece = board.getCellById(rightUpCell).getPiece();
+                if(piece == null ) {
+                    availableCellsToMove.add(rightUpCell);
+                }else{
+                    if(piece.getColor() != getColor()){
+                        availableCellsToMove.add(rightUpCell);
+                        break;
+                    }else
+                        break;
+                }
             }
         }
+
+        for (int i = xPos + 1; i <= 8; i++) {
+            step++;
+            String leftUpCell = new String(i + "" + (char) (yPos - step));
+            if (board.getCellById(leftUpCell) != null){
+                Piece piece = board.getCellById(leftUpCell).getPiece();
+                if(piece == null ) {
+                    availableCellsToMove.add(leftUpCell);
+                }else{
+                    if(piece.getColor() != getColor()){
+                        availableCellsToMove.add(leftUpCell);
+                        break;
+                    }else
+                        break;
+                }
+            }
+        }
+
         step = 0;
+
         for(int c = xPos - 1 ; c >= 1; c--){
             step++;
             String rightDownCell = new String(c + "" + (char) (yPos + step));
-            String leftDownCell = new String(c + "" + (char) (yPos - step));
-            if (board.getCellById(rightDownCell) != null && board.getCellById(rightDownCell).getPiece() == null) {
-                availableCellsToMove.add(rightDownCell);
-            }
-            if (board.getCellById(leftDownCell) != null && board.getCellById(leftDownCell).getPiece() == null) {
-                availableCellsToMove.add(leftDownCell);
+            if (board.getCellById(rightDownCell) != null){
+                Piece piece = board.getCellById(rightDownCell).getPiece();
+                if(piece == null ) {
+                    availableCellsToMove.add(rightDownCell);
+                }else{
+                    if(piece.getColor() != getColor()){
+                        availableCellsToMove.add(rightDownCell);
+                        break;
+                    }else
+                        break;
+                }
             }
         }
+        for(int c = xPos - 1 ; c >= 1; c--){
+            step++;
+            String leftDownCell = new String(c + "" + (char) (yPos - step));
+            if (board.getCellById(leftDownCell) != null){
+                Piece piece = board.getCellById(leftDownCell).getPiece();
+                if(piece == null ) {
+                    availableCellsToMove.add(leftDownCell);
+                }else{
+                    if(piece.getColor() != getColor()){
+                        availableCellsToMove.add(leftDownCell);
+                        break;
+                    }else
+                        break;
+                }
+            }
+        }
+
         return availableCellsToMove;
     }
 

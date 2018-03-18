@@ -93,7 +93,7 @@ public class ChessBoard {
             Response res = Client.getInstance().send(
                     OperationType.GET_CELL,
                     MainConfig.getNetworkGameBoard().getId(),
-                    MainConfig.getEnemy().getUsername()
+                    MainConfig.getUser().getUsername()
             );
 
             System.out.println("Get from server " + res.getData());
@@ -101,7 +101,7 @@ public class ChessBoard {
             Response res = Client.getInstance().send(
                     OperationType.GET_CELL,
                     MainConfig.getNetworkGameBoard().getId(),
-                    MainConfig.getEnemy().getUsername()
+                    MainConfig.getUser().getUsername()
             );
 
             System.out.println("Get from server " + res.getData());

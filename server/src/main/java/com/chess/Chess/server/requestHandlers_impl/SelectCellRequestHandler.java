@@ -13,11 +13,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class SelectCellRequestHandler implements RequestHandler {
 
-    public static Map<Pair<Integer, String>, String> celss = new HashMap<>();
+    public static Map<Integer, Map<String, String>> celss = new HashMap<>();
 
     @Autowired
     private ChessGameEngine chessGameEngine;
@@ -29,7 +30,14 @@ public class SelectCellRequestHandler implements RequestHandler {
             String name = (String) ois.readObject();
             String cellId = (String) ois.readObject();
 
-            celss.put(Pair.of(boardId, name), cellId);
+            if (celss.containsKey(boardId)) {
+                celss.get(boardId).put(name, cellId);
+            } else {
+                Map<String, String> map = new ConcurrentHashMap<>();
+                map.put(name, cellId);
+
+                celss.put(boardId, map);
+            }
 
             oos.writeObject(new Response(RequestCode.OK));
         } catch (IOException | ClassNotFoundException e) {

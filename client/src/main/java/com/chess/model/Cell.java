@@ -29,7 +29,7 @@ public class Cell extends Rectangle{
         setFill(color);
         setOnMouseClicked( e -> {
 //            if(getPiece() != null) {
-                chessBoard.setSelectedCell(this);
+                this.chessBoard.setSelectedCell(this);
 //            }
         });
     }

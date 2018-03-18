@@ -21,19 +21,18 @@ public class ChessBoard {
     private GridPane root = new GridPane();
 
     private Cell selectedCell = null;
-
     private boolean owner = false;
 
     public Parent createContent() {
-        boolean isWhite = true;
         Color color = Color.WHITE;
         for (int i = 7; i >= 0; i--) {
             for (int j = 0; j < 8; j++) {
                 if ((j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0)) {
-                    color = Color.WHITE;
-                } else {
                     color = Color.BLACK;
+                } else {
+                    color = Color.WHITE;
                 }
+
                 board[i][j] = new Cell(color, i, (char) (j + 97), this);
                 GridPane.setRowIndex(board[i][j], 8 - i);
                 GridPane.setColumnIndex(board[i][j], j);
@@ -47,16 +46,15 @@ public class ChessBoard {
 
     public void initializeWhitePieces() {
         owner = true;
+
+
     }
 
     public void initializeBlackPieces() {
         owner = false;
     }
 
-    private Piece createPiece(PieceType type, int x, int y) {
-        Piece piece = new Piece(type, x, y);
-        return piece;
-    }
+
 
     private Cell getCellById(String id) {
         Cell foundCell = null;

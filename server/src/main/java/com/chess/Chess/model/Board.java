@@ -38,9 +38,9 @@ public class Board implements GameBoard{
        for(int i = 7; i >= 0 ; i--){
            for(int j = 0; j < 8; j++){
                if ((j % 2 == 1 && i % 2 == 1) || (j % 2 == 0 && i % 2 == 0)) {
-                   color = Color.WHITE;
-               } else {
                    color = Color.BLACK;
+               } else {
+                   color = Color.WHITE;
                }
                cells[i][j] = new Cell(i, (char) (j + 97),color);
                System.out.print('[' + cells[i][j].getId() + cells[i][j].getColor() + ']'  );

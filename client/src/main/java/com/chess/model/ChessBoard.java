@@ -3,17 +3,19 @@ package com.chess.model;
 
 import com.chess.Client;
 import com.chess.config.MainConfig;
-import javafx.event.EventType;
+import com.chess.types.State;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Parent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
+import javafx.util.Duration;
 import network.OperationType;
 import network.Response;
 
 
 public class ChessBoard {
-
     public static final int BOARD_SIZE = 8;
     public static final int CELL_SIZE = 60;
 
@@ -21,8 +23,8 @@ public class ChessBoard {
     private GridPane root = new GridPane();
 
     private Cell selectedCell = null;
-
-    private boolean owner = false;
+    private Cell enemyCell = null;
+    private State state;
 
     public Parent createContent() {
         boolean isWhite = true;
@@ -46,11 +48,11 @@ public class ChessBoard {
     }
 
     public void initializeWhitePieces() {
-        owner = true;
+        state = State.SEND;
     }
 
     public void initializeBlackPieces() {
-        owner = false;
+        state = State.GET;
     }
 
     private Piece createPiece(PieceType type, int x, int y) {
@@ -72,46 +74,69 @@ public class ChessBoard {
         return selectedCell;
     }
 
+    public void sendCell() {
+        Client.getInstance().send(
+                OperationType.SELECT_CELL,
+                MainConfig.getNetworkGameBoard().getId(),
+                MainConfig.getUser().getUsername(),
+                selectedCell.getCellId()
+        );
+    }
+
+    public void getCell() {
+        Response res = Client.getInstance().send(
+                OperationType.GET_CELL,
+                MainConfig.getNetworkGameBoard().getId(),
+                MainConfig.getUser().getUsername()
+        );
+
+        Object response = res.getData();
+
+        if (response != null) {
+            String cellId = (String) response;
+            System.out.println("Get from server " + cellId);
+
+            if (enemyCell != null) {
+                enemyCell.hide();
+            }
+
+            enemyCell = getCellById(cellId);
+            enemyCell.highlight(Color.BLUE);
+
+            state = State.SEND;
+        }
+
+    }
+
     public void setSelectedCell(Cell selectedCell) {
+        if (state.equals(State.GET)) {
+            return;
+        }
+
         if (this.selectedCell != null) {
+            this.selectedCell.hide();
             this.selectedCell.setStrokeType(StrokeType.INSIDE);
             this.selectedCell.setStrokeWidth(0);
         }
         this.selectedCell = selectedCell;
-        this.selectedCell.setStrokeType(StrokeType.INSIDE);
-        this.selectedCell.setStroke(Color.RED);
-        this.selectedCell.setStrokeWidth(3);
+        this.selectedCell.highlight(Color.RED);
 
-        if (owner) {
-            Client.getInstance().send(
-                    OperationType.SELECT_CELL,
-                    MainConfig.getNetworkGameBoard().getId(),
-                    MainConfig.getUser().getUsername(),
-                    selectedCell.getCellId()
-            );
+        sendCell();
+        state = State.GET;
+    }
 
-            Response res = Client.getInstance().send(
-                    OperationType.GET_CELL,
-                    MainConfig.getNetworkGameBoard().getId(),
-                    MainConfig.getUser().getUsername()
-            );
-
-            System.out.println("Get from server " + res.getData());
-        } else {
-            Response res = Client.getInstance().send(
-                    OperationType.GET_CELL,
-                    MainConfig.getNetworkGameBoard().getId(),
-                    MainConfig.getUser().getUsername()
-            );
-
-            System.out.println("Get from server " + res.getData());
-
-            Client.getInstance().send(
-                    OperationType.SELECT_CELL,
-                    MainConfig.getNetworkGameBoard().getId(),
-                    MainConfig.getUser().getUsername(),
-                    selectedCell.getCellId()
-            );
-        }
+    public ChessBoard() {
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(true);
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.millis(100),
+                        ev -> {
+                            if (state.equals(State.GET)) {
+                                getCell();
+                            }
+                        }
+                ));
+        timeline.play();
     }
 }

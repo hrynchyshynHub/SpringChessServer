@@ -70,7 +70,7 @@ public class AvailableGames {
                                 Util.showAlert("Can`t join", "Error");
                             } else {
                                 Stage stage = (Stage) tableView.getScene().getWindow();
-                                Util.showAlert("Succesful join", "Success");
+                                Util.showAlert("Successful join", "Success");
                                 MainConfig.setNetworkGameBoard((NetworkGameBoard) response.getData());
                                 MainConfig.setEnemy(MainConfig.getNetworkGameBoard().getSecondPlayer());
                                 ChessBoard chessBoard = new ChessBoard();
@@ -79,7 +79,6 @@ public class AvailableGames {
                                 stage.setScene(scene);
                                 stage.show();
                             }
-
                         });
                     }
 

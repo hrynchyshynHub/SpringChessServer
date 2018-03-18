@@ -3,7 +3,6 @@ package com.chess.model;
 
 import com.chess.Client;
 import com.chess.config.MainConfig;
-import com.chess.types.State;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -16,6 +15,12 @@ import network.Response;
 
 
 public class ChessBoard {
+    private enum State {
+        SEND,
+        GET
+    }
+
+
     public static final int BOARD_SIZE = 8;
     public static final int CELL_SIZE = 60;
 
@@ -25,6 +30,21 @@ public class ChessBoard {
     private Cell selectedCell = null;
     private Cell enemyCell = null;
     private State state;
+
+    public ChessBoard() {
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(true);
+        timeline.getKeyFrames().add(
+                new KeyFrame(Duration.millis(100),
+                        ev -> {
+                            if (state.equals(State.GET)) {
+                                getCell();
+                            }
+                        }
+                ));
+        timeline.play();
+    }
 
     public Parent createContent() {
         boolean isWhite = true;
@@ -123,20 +143,5 @@ public class ChessBoard {
 
         sendCell();
         state = State.GET;
-    }
-
-    public ChessBoard() {
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.setAutoReverse(true);
-        timeline.getKeyFrames().add(
-                new KeyFrame(Duration.millis(100),
-                        ev -> {
-                            if (state.equals(State.GET)) {
-                                getCell();
-                            }
-                        }
-                ));
-        timeline.play();
     }
 }

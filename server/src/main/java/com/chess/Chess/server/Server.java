@@ -23,19 +23,6 @@ public class Server {
         this.operationHandlerBeanPostProcessor = operationHandlerBeanPostProcessor;
     }
 
-    private class ClientRunnable implements Runnable {
-        private Socket clientSocket;
-
-        ClientRunnable(Socket clientSocket) {
-            this.clientSocket = clientSocket;
-        }
-
-        @Override
-        public void run() {
-            operationHandlerBeanPostProcessor.handleOperation(clientSocket);
-        }
-    }
-
     public void runServer() {
         try {
             ServerSocket listener = new ServerSocket(ApplicationProperties.getPort());
@@ -53,8 +40,9 @@ public class Server {
 
             while (!listener.isClosed()) {
                 Socket socket = listener.accept();
-                ClientRunnable clientRunnable = new ClientRunnable(socket);
-                threadPoolExecutor.execute(clientRunnable);
+                threadPoolExecutor.execute(
+                        () -> operationHandlerBeanPostProcessor.handleOperation(socket)
+                );
             }
 
             threadPoolExecutor.shutdown();

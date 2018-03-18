@@ -6,6 +6,7 @@ import network.model.Player;
 
 public class MainConfig {
     private static Player player;
+    private static Player enemy;
     private static NetworkGameBoard networkGameBoard;
 
     public static void reset() {
@@ -22,6 +23,14 @@ public class MainConfig {
 
     public static void resetBoard(){
         networkGameBoard = null;
+    }
+
+    public static void setEnemy(Player player){
+        enemy = player;
+    }
+
+    public static Player getEnemy(){
+        return enemy;
     }
 
     public static NetworkGameBoard getNetworkGameBoard() {

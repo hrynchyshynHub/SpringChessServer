@@ -38,8 +38,8 @@ public class AvailableGames {
 
     @FXML
     public void initialize() {
-        Response response= Client.getInstance().send(OperationType.GET_AVAILABLE_GAMES, MainConfig.getUser());
-        networkGameBoards.addAll((List<NetworkGameBoard>)response.getData());
+        Response response = Client.getInstance().send(OperationType.GET_AVAILABLE_GAMES, MainConfig.getUser());
+        networkGameBoards.addAll((List<NetworkGameBoard>) response.getData());
         idColumn.setCellValueFactory(new PropertyValueFactory<NetworkGameBoard, Integer>("id"));
         firstPlayer.setCellValueFactory(new PropertyValueFactory<NetworkGameBoard, Player>("firstPlayer"));
         addButtonToTable();
@@ -66,12 +66,13 @@ public class AvailableGames {
 
                             Response response = Client.getInstance().send(OperationType.JOIN_GAME, data);
 
-                            if(response.getRequestCode() == RequestCode.ERROR){
+                            if (response.getRequestCode() == RequestCode.ERROR) {
                                 Util.showAlert("Can`t join", "Error");
-                            }else{
-                                Stage stage = (Stage)tableView.getScene().getWindow();
+                            } else {
+                                Stage stage = (Stage) tableView.getScene().getWindow();
                                 Util.showAlert("Succesful join", "Success");
                                 MainConfig.setNetworkGameBoard((NetworkGameBoard) response.getData());
+                                MainConfig.setEnemy(MainConfig.getNetworkGameBoard().getSecondPlayer());
                                 ChessBoard chessBoard = new ChessBoard();
                                 Scene scene = new Scene(chessBoard.createContent());
                                 chessBoard.initializeBlackPieces();

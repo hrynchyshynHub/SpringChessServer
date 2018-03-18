@@ -12,7 +12,7 @@ import java.io.ObjectOutputStream;
 public class MoveRequestImpl implements RequestHandler {
 
     @Override
-    public void execute(ObjectInputStream ois, ObjectOutputStream oos) {
-
+    public boolean execute(ObjectInputStream ois, ObjectOutputStream oos) {
+        return false;
     }
 }

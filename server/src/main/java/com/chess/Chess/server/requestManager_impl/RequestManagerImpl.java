@@ -31,9 +31,12 @@ public class RequestManagerImpl implements RequestManager {
     @Autowired
     private SelectCellRequestHandler selectCellRequestHandler;
 
+    @Autowired
+    private GetCellRequestHandler getCellRequestHandler;
+
     @Override
     public RequestHandler handleRequest(OperationType type) {
-        switch (type){
+        switch (type) {
             case LOGIN:
                 return loginHandler;
             case REGISTER_USER:
@@ -41,13 +44,15 @@ public class RequestManagerImpl implements RequestManager {
             case CREATE_GAME:
                 return createGameRequestHandler;
             case TRY_MOVE:
-                return  moveRequestHandler;
+                return moveRequestHandler;
             case SELECT_CELL:
-                return  selectCellRequestHandler;
+                return selectCellRequestHandler;
             case JOIN_GAME:
                 return joinGameRequestHandler;
             case GET_AVAILABLE_GAMES:
                 return getAvailableGamesRequestHandler;
+            case GET_CELL:
+                return getCellRequestHandler;
         }
         return null;
     }

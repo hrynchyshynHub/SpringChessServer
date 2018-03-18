@@ -31,16 +31,29 @@ public class Server {
 
         @Override
         public void run() {
-            try (Socket socket = clientSocket) {
+            Socket socket = clientSocket;
+
+            boolean closeSocket = true;
+
+            try {
                 ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
                 ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
 
                 OperationType operationType = (OperationType) in.readObject();
                 logger.info("Handle request with operation type " + operationType.toString());
-                requestManager.handleRequest(operationType).execute(in, out);
+
+                closeSocket = requestManager.handleRequest(operationType).execute(in, out);
                 out.flush();
             } catch (IOException | ClassNotFoundException e) {
-                logger.error(e.getMessage(),e);
+                logger.error(e.getMessage(), e);
+            } finally {
+                if (closeSocket) {
+                    try {
+                        socket.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
     }
@@ -53,11 +66,11 @@ public class Server {
             BlockingQueue<Runnable> blockingQueue = new ArrayBlockingQueue<>(poolSize);
 
             ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
-                poolSize,
-                poolSize,
-                ApplicationProperties.getTimeToKeepAlive(),
-                TimeUnit.SECONDS,
-                blockingQueue
+                    poolSize,
+                    poolSize,
+                    ApplicationProperties.getTimeToKeepAlive(),
+                    TimeUnit.SECONDS,
+                    blockingQueue
             );
 
             while (!listener.isClosed()) {
@@ -68,7 +81,7 @@ public class Server {
 
             threadPoolExecutor.shutdown();
         } catch (IOException e) {
-            logger.error(e.getMessage(),e);
+            logger.error(e.getMessage(), e);
         }
     }
 }

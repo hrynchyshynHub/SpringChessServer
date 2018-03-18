@@ -46,8 +46,6 @@ public class Cell extends Rectangle{
 
     }
 
-
-
     public String getCellId() {
         return id;
     }

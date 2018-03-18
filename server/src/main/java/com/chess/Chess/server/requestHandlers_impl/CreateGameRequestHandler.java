@@ -32,7 +32,7 @@ public class CreateGameRequestHandler implements RequestHandler {
 
 
     @Override
-    public void execute(ObjectInputStream ois, ObjectOutputStream oos) {
+    public boolean execute(ObjectInputStream ois, ObjectOutputStream oos) {
         try {
             network.model.Player receivedPlayer = (network.model.Player) ois.readObject();
             Player user = userService.findByUsername(receivedPlayer.getUsername());
@@ -44,5 +44,6 @@ public class CreateGameRequestHandler implements RequestHandler {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+        return true;
     }
 }

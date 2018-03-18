@@ -28,7 +28,7 @@ public class JoinGameRequestHandler implements RequestHandler {
     private final static Logger logger = Logger.getLogger(JoinGameRequestHandler.class);
 
     @Override
-    public void execute(ObjectInputStream ois, ObjectOutputStream oos) {
+    public boolean execute(ObjectInputStream ois, ObjectOutputStream oos) {
         try{
 
             NetworkGameBoard networkGameBoard = (NetworkGameBoard)ois.readObject();
@@ -48,5 +48,6 @@ public class JoinGameRequestHandler implements RequestHandler {
             e.printStackTrace();
         }
 
+        return true;
     }
 }

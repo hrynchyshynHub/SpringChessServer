@@ -19,7 +19,7 @@ public class Client {
         try {
             socket = new Socket(host, port);
             out = new ObjectOutputStream(socket.getOutputStream());
-            in = new ObjectInputStream(socket.getInputStream());
+            in = new ObjectInputStream( socket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,7 +27,7 @@ public class Client {
 
     synchronized public static Client getInstance() {
         return new Client(ApplicationProperties.getHost(), ApplicationProperties.getPort());
-    }
+        }
 
     synchronized public Response send(OperationType operationType, @NotNull Object... value) {
         try (Socket socket = this.socket) {
@@ -36,7 +36,13 @@ public class Client {
                 out.writeObject(obj);
             }
             out.flush();
-            return (Response) in.readObject();
+            Response response = (Response) in.readObject();
+
+            if (response.getRequestCode().equals(RequestCode.RECONECT)){
+                return (Response) in.readObject();
+            }
+
+            return response;
         } catch (IOException | ClassNotFoundException | NullPointerException e) {
             e.printStackTrace();
         }

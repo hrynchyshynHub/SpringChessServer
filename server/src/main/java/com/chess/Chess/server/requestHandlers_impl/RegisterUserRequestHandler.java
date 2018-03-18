@@ -22,7 +22,7 @@ public class RegisterUserRequestHandler implements RequestHandler {
     private UserService userService;
 
     @Override
-    public void execute(ObjectInputStream ois, ObjectOutputStream oos) {
+    public boolean execute(ObjectInputStream ois, ObjectOutputStream oos) {
         try{
             Player recivedPlayer = NetworkModelsUtil.convertToPlayer((network.model.Player)ois.readObject());
 
@@ -43,5 +43,7 @@ public class RegisterUserRequestHandler implements RequestHandler {
         }catch (IOException | ClassNotFoundException e){
             e.printStackTrace();
         }
+
+        return true;
     }
 }

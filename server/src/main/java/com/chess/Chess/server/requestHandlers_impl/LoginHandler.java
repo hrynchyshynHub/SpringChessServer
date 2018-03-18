@@ -23,7 +23,7 @@ public class LoginHandler implements RequestHandler {
     private UserService userService;
 
     @Override
-    public void execute(ObjectInputStream ois, ObjectOutputStream oos) {
+    public boolean execute(ObjectInputStream ois, ObjectOutputStream oos) {
        try{
            network.model.Player receivedPlayer = (network.model.Player) ois.readObject();
 
@@ -31,14 +31,14 @@ public class LoginHandler implements RequestHandler {
 
            if (user == null) {
                oos.writeObject(new Response(RequestCode.ERROR, "No such user in database"));
-               return;
            } else if (!user.getPassword().equals(receivedPlayer.getPassword())) {
                oos.writeObject(new Response(RequestCode.ERROR, "Incorrect password"));
-               return;
            }
            oos.writeObject(new Response(RequestCode.OK, NetworkModelsUtil.convertToNetworkPlayer(user)));
        }catch (IOException | ClassNotFoundException e){
            System.out.println(e);
        }
+
+       return true;
     }
 }

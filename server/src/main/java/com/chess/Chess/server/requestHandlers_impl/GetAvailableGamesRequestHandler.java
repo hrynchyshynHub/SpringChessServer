@@ -29,7 +29,7 @@ public class GetAvailableGamesRequestHandler implements RequestHandler {
     private UserService userService;
 
     @Override
-    public void execute(ObjectInputStream ois, ObjectOutputStream oos) {
+    public boolean execute(ObjectInputStream ois, ObjectOutputStream oos) {
         try{
             network.model.Player receivedPlayer = (network.model.Player) ois.readObject();
             Player user = userService.findByUsername(receivedPlayer.getUsername());
@@ -42,12 +42,12 @@ public class GetAvailableGamesRequestHandler implements RequestHandler {
                 oos.writeObject(new Response(RequestCode.OK, NetworkModelsUtil.convertToNetworkBoards(boards)));
             }else{
                 oos.writeObject(new Response(RequestCode.ERROR, new ArrayList<>()));
-                return;
             }
 
         }catch (IOException | ClassNotFoundException e){
 
         }
 
+        return true;
     }
 }

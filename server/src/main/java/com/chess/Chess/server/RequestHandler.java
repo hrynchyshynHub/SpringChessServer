@@ -5,5 +5,5 @@ import java.io.ObjectOutputStream;
 
 @FunctionalInterface
 public interface RequestHandler {
-    void execute(ObjectInputStream ois, ObjectOutputStream oos);
+    boolean execute(ObjectInputStream ois, ObjectOutputStream oos);
 }

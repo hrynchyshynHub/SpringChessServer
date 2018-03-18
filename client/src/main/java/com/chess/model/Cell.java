@@ -1,13 +1,12 @@
 package com.chess.model;
 
-import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
+import javafx.scene.shape.StrokeType;
 
 import static com.chess.model.ChessBoard.CELL_SIZE;
 
-public class Cell extends Rectangle{
+public class Cell extends Rectangle {
 
     private Piece piece;
     private int x;
@@ -33,7 +32,8 @@ public class Cell extends Rectangle{
 //            }
         });
     }
-    public boolean hasPiece(){
+
+    public boolean hasPiece() {
         return piece != null;
     }
 
@@ -61,5 +61,16 @@ public class Cell extends Rectangle{
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public void highlight(Color color) {
+        this.setStrokeType(StrokeType.INSIDE);
+        this.setStroke(color);
+        this.setStrokeWidth(3);
+    }
+
+    public void hide() {
+        this.setStrokeType(StrokeType.INSIDE);
+        this.setStrokeWidth(0);
     }
 }

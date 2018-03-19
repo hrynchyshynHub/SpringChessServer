@@ -1,8 +1,9 @@
 package com.chess.model;
 
-import javafx.scene.layout.*;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+
 import static com.chess.model.ChessBoard.CELL_SIZE;
 
 public  class Piece extends StackPane{

@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.StrokeType;
 import javafx.util.Duration;
-import network.OperationType;
+import network.OperationHandlers;
 import network.Response;
 
 
@@ -36,7 +36,7 @@ public class ChessBoard {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.setAutoReverse(true);
         timeline.getKeyFrames().add(
-                new KeyFrame(Duration.millis(100),
+                new KeyFrame(Duration.millis(500),
                         ev -> {
                             if (state.equals(State.GET)) {
                                 getCell();
@@ -96,7 +96,7 @@ public class ChessBoard {
 
     public void sendCell() {
         Client.getInstance().send(
-                OperationType.SELECT_CELL,
+                OperationHandlers.SELECT_CELL,
                 MainConfig.getNetworkGameBoard().getId(),
                 MainConfig.getUser().getUsername(),
                 selectedCell.getCellId()
@@ -105,7 +105,7 @@ public class ChessBoard {
 
     public void getCell() {
         Response res = Client.getInstance().send(
-                OperationType.GET_CELL,
+                OperationHandlers.GET_CELL,
                 MainConfig.getNetworkGameBoard().getId(),
                 MainConfig.getUser().getUsername()
         );

@@ -1,6 +1,6 @@
 package com.chess.Chess.server;
 
-import com.chess.Chess.operation_handler.OperationHandlerBeanPostProcessor;
+import com.chess.Chess.operation_handler.OperationHandlers;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,18 +16,17 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class Server {
     private final static Logger logger = Logger.getLogger(Server.class);
-    private final OperationHandlerBeanPostProcessor operationHandlerBeanPostProcessor;
+    private final OperationHandlers operationHandlers;
 
     @Autowired
-    public Server(OperationHandlerBeanPostProcessor operationHandlerBeanPostProcessor) {
-        this.operationHandlerBeanPostProcessor = operationHandlerBeanPostProcessor;
+    public Server(OperationHandlers operationHandlers) {
+        this.operationHandlers = operationHandlers;
     }
+
 
     public void runServer() {
         try {
-            ServerSocket listener = new ServerSocket(ApplicationProperties.getPort());
             int poolSize = ApplicationProperties.getPoolSize();
-
             BlockingQueue<Runnable> blockingQueue = new ArrayBlockingQueue<>(poolSize);
 
             ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
@@ -38,12 +37,13 @@ public class Server {
                     blockingQueue
             );
 
-            while (!listener.isClosed()) {
-                Socket socket = listener.accept();
-                threadPoolExecutor.execute(
-                        () -> operationHandlerBeanPostProcessor.handleOperation(socket)
-                );
+            try (ServerSocket listener = new ServerSocket(ApplicationProperties.getPort())) {
+                while (!listener.isClosed()) {
+                    Socket socket = listener.accept();
+                    threadPoolExecutor.execute(() -> operationHandlers.handleOperation(socket));
+                }
             }
+
 
             threadPoolExecutor.shutdown();
         } catch (IOException e) {

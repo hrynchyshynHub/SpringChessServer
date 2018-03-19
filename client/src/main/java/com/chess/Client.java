@@ -1,13 +1,14 @@
 package com.chess;
 
-import javax.validation.constraints.NotNull;
 import com.chess.config.ApplicationProperties;
 import com.chess.controller_elements.Util;
-import network.OperationType;
-import network.RequestCode;
 import network.Response;
+import network.StatusCode;
 
-import java.io.*;
+import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class Client {
@@ -29,25 +30,17 @@ public class Client {
         return new Client(ApplicationProperties.getHost(), ApplicationProperties.getPort());
         }
 
-    synchronized public Response send(OperationType operationType, @NotNull Object... value) {
+    synchronized public Response send(String  path, @NotNull Object... value) {
         try (Socket socket = this.socket) {
-            out.writeObject(operationType);
-            for (Object obj : value) {
-                out.writeObject(obj);
-            }
+            out.writeObject(path);
+            out.writeObject(value);
             out.flush();
-            Response response = (Response) in.readObject();
-
-            if (response.getRequestCode().equals(RequestCode.RECONECT)){
-                return (Response) in.readObject();
-            }
-
-            return response;
+            return (Response) in.readObject();
         } catch (IOException | ClassNotFoundException | NullPointerException e) {
             e.printStackTrace();
         }
 
         Util.showConnectionErrorNotice();
-        return new Response(RequestCode.CONNECTION_ERROR);
+        return new Response(StatusCode.CONNECTION_ERROR);
     }
 }

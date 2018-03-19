@@ -69,7 +69,7 @@ public class GeneralOperationHandlers {
         }
     }
 
-    @OperationHandler()
+    @OperationHandler
     public Response login(network.model.Player receivedPlayer) throws IOException {
         Player user = userService.findByUsername(receivedPlayer.getUsername());
 

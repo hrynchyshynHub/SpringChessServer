@@ -1,15 +1,12 @@
 package com.chess.Chess.server;
 
 import com.chess.Chess.operation_handler.OperationHandler;
-import network.OperationType;
-import network.RequestCode;
+import network.StatusCode;
 import network.Response;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -21,12 +18,8 @@ public class CellOperationHandlers {
     private Map<Integer, Map<String, String>> cells = new HashMap<>();
 
 
-    @OperationHandler(operationType = OperationType.SELECT_CELL)
-    public void selectCell(ObjectInputStream ois, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
-        Integer boardId = (Integer) ois.readObject();
-        String name = (String) ois.readObject();
-        String cellId = (String) ois.readObject();
-
+    @OperationHandler
+    public Response selectCell(Integer boardId, String name, String cellId) throws IOException {
         if (cells.containsKey(boardId)) {
             cells.get(boardId).put(name, cellId);
         } else {
@@ -36,14 +29,11 @@ public class CellOperationHandlers {
             cells.put(boardId, map);
         }
 
-        oos.writeObject(new Response(RequestCode.OK));
+        return new Response(StatusCode.OK);
     }
 
-    @OperationHandler(operationType = OperationType.GET_CELL)
-    public void getCell(ObjectInputStream ois, ObjectOutputStream oos) throws IOException, ClassNotFoundException {
-        Integer boardId = (Integer) ois.readObject();
-        String name = (String) ois.readObject();
-
+    @OperationHandler
+    public Response getCell(Integer boardId, String name) throws IOException {
         // FIXME: maybe it's better to keep socket connection
         if (cells.containsKey(boardId)) {
             Map<String, String> moves = cells.get(boardId);
@@ -54,18 +44,18 @@ public class CellOperationHandlers {
                     .findAny();
 
             if (enemy.isPresent()) {
-                oos.writeObject(new Response(RequestCode.OK, moves.remove(enemy.get())));
-                return;
+                return new Response(StatusCode.OK, moves.remove(enemy.get()));
             }
         }
 
-        oos.writeObject(new Response(RequestCode.OK));
+        return new Response(StatusCode.OK);
     }
 
 
-    @OperationHandler(operationType = OperationType.TRY_MOVE)
-    public void execute(ObjectInputStream ois, ObjectOutputStream oos) {
-        //TODO: implement this method;
+    @OperationHandler
+    public Response tryMove() {
+        //TODO: implement this method
+        return new Response(StatusCode.ERROR, "Not implemented yet");
     }
 
 }

@@ -5,19 +5,19 @@ import java.io.Serializable;
 public class Response implements Serializable {
 
     private Object data;
-    private RequestCode requestCode;
+    private StatusCode statusCode;
 
     public Response() {
-        requestCode = RequestCode.ERROR;
+        statusCode = StatusCode.ERROR;
     }
 
-    public Response(RequestCode requestCode) {
-        this.requestCode = requestCode;
+    public Response(StatusCode statusCode) {
+        this.statusCode = statusCode;
     }
 
-    public Response(RequestCode requestCode, Object data) {
+    public Response(StatusCode statusCode, Object data) {
         this.data = data;
-        this.requestCode = requestCode;
+        this.statusCode = statusCode;
     }
 
     public Object getData() {
@@ -28,12 +28,12 @@ public class Response implements Serializable {
         this.data = data;
     }
 
-    public RequestCode getRequestCode() {
-        return requestCode;
+    public StatusCode getStatusCode() {
+        return statusCode;
     }
 
-    public void setRequestCode(RequestCode requestCode) {
-        this.requestCode = requestCode;
+    public void setStatusCode(StatusCode statusCode) {
+        this.statusCode = statusCode;
     }
 }
 

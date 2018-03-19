@@ -1,10 +1,9 @@
 package network;
 
 
-public enum RequestCode {
+public enum StatusCode {
     OK,
     ERROR,
-    RECONECT,
     CONNECTION_ERROR;
 
     @Override

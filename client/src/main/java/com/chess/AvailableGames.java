@@ -15,9 +15,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import network.OperationType;
-import network.RequestCode;
+import network.OperationHandlers;
 import network.Response;
+import network.StatusCode;
 import network.model.NetworkGameBoard;
 import network.model.Player;
 
@@ -38,7 +38,7 @@ public class AvailableGames {
 
     @FXML
     public void initialize() {
-        Response response = Client.getInstance().send(OperationType.GET_AVAILABLE_GAMES, MainConfig.getUser());
+        Response response = Client.getInstance().send(OperationHandlers.GET_AVAILABLE_GAMES, MainConfig.getUser());
         networkGameBoards.addAll((List<NetworkGameBoard>) response.getData());
         idColumn.setCellValueFactory(new PropertyValueFactory<NetworkGameBoard, Integer>("id"));
         firstPlayer.setCellValueFactory(new PropertyValueFactory<NetworkGameBoard, Player>("firstPlayer"));
@@ -64,9 +64,9 @@ public class AvailableGames {
                             NetworkGameBoard data = getTableView().getItems().get(getIndex());
                             data.setSecondPlayer(MainConfig.getUser());
 
-                            Response response = Client.getInstance().send(OperationType.JOIN_GAME, data);
+                            Response response = Client.getInstance().send(OperationHandlers.JOIN_GAME, data);
 
-                            if (response.getRequestCode() == RequestCode.ERROR) {
+                            if (response.getStatusCode() == StatusCode.ERROR) {
                                 Util.showAlert("Can`t join", "Error");
                             } else {
                                 Stage stage = (Stage) tableView.getScene().getWindow();

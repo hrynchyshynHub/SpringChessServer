@@ -53,7 +53,8 @@ public class MenuControlller {
             Util.showAlert("Game created", "Waiting for oponent");
             MainConfig.setNetworkGameBoard((NetworkGameBoard) response.getData());
             ChessBoard chessBoard = new ChessBoard();
-            Scene scene = new Scene(chessBoard.createContent());
+            Scene scene = new Scene(chessBoard.initRootLayout());
+            chessBoard.showPersonOverview();
             chessBoard.initializeWhitePieces();
             stage.setScene(scene);
             stage.show();
@@ -68,6 +69,5 @@ public class MenuControlller {
     public void exit(ActionEvent event) {
         System.exit(0);
     }
-
 
 }

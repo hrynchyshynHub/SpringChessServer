@@ -74,7 +74,8 @@ public class AvailableGames {
                                 MainConfig.setNetworkGameBoard((NetworkGameBoard) response.getData());
                                 MainConfig.setEnemy(MainConfig.getNetworkGameBoard().getSecondPlayer());
                                 ChessBoard chessBoard = new ChessBoard();
-                                Scene scene = new Scene(chessBoard.createContent());
+                                Scene scene = new Scene(chessBoard.initRootLayout());
+                                chessBoard.showPersonOverview();
                                 chessBoard.initializeBlackPieces();
                                 stage.setScene(scene);
                                 stage.show();

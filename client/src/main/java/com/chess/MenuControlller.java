@@ -36,20 +36,20 @@ public class MenuControlller {
     private AnchorPane pane;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         welcomelabel.setLabelFor(btnNewGame);
         welcomelabel.setFont(new Font(25));
         pane.getChildren().add(welcomelabel);
     }
 
-    public void newGame(ActionEvent event){
-        Stage stage = (Stage)btnNewGame.getScene().getWindow();
+    public void newGame(ActionEvent event) {
+        Stage stage = (Stage) btnNewGame.getScene().getWindow();
         Parent root;
         Response response = Client.getInstance().send(OperationType.CREATE_GAME, MainConfig.getUser());
 
-        if(response.getRequestCode().equals(RequestCode.ERROR)) {
+        if (response.getRequestCode().equals(RequestCode.ERROR)) {
             Util.showAlert("error", response.getData().toString(), "");
-        }else if(response.getRequestCode().equals(RequestCode.OK)){
+        } else if (response.getRequestCode().equals(RequestCode.OK)) {
             Util.showAlert("Game created", "Waiting for oponent");
             MainConfig.setNetworkGameBoard((NetworkGameBoard) response.getData());
             ChessBoard chessBoard = new ChessBoard();
@@ -60,12 +60,12 @@ public class MenuControlller {
         }
     }
 
-    public void loadGame(ActionEvent event){
+    public void loadGame(ActionEvent event) {
         ViewLoader viewLoader = new ViewLoader((Node) event.getSource());
         viewLoader.loadScene("view/availableGames.fxml", "Games");
     }
 
-    public void exit(ActionEvent event){
+    public void exit(ActionEvent event) {
         System.exit(0);
     }
 

@@ -14,9 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import network.OperationType;
-import network.RequestCode;
+import network.OperationHandlers;
 import network.Response;
+import network.StatusCode;
 import network.model.NetworkGameBoard;
 
 
@@ -45,11 +45,11 @@ public class MenuControlller {
     public void newGame(ActionEvent event) {
         Stage stage = (Stage) btnNewGame.getScene().getWindow();
         Parent root;
-        Response response = Client.getInstance().send(OperationType.CREATE_GAME, MainConfig.getUser());
+        Response response = Client.getInstance().send(OperationHandlers.CREATE_GAME, MainConfig.getUser());
 
-        if (response.getRequestCode().equals(RequestCode.ERROR)) {
+        if (response.getStatusCode().equals(StatusCode.ERROR)) {
             Util.showAlert("error", response.getData().toString(), "");
-        } else if (response.getRequestCode().equals(RequestCode.OK)) {
+        } else if (response.getStatusCode().equals(StatusCode.OK)) {
             Util.showAlert("Game created", "Waiting for oponent");
             MainConfig.setNetworkGameBoard((NetworkGameBoard) response.getData());
             ChessBoard chessBoard = new ChessBoard();

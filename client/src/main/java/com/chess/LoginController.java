@@ -9,9 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import network.OperationType;
-import network.RequestCode;
+import network.OperationHandlers;
 import network.Response;
+import network.StatusCode;
 import network.model.Player;
 
 import java.io.IOException;
@@ -40,11 +40,11 @@ public class LoginController {
 
         Player player = new Player(userName, pass);
 
-        Response response = Client.getInstance().send(OperationType.LOGIN, player);
+        Response response = Client.getInstance().send(OperationHandlers.LOGIN, player);
 
-        if(response.getRequestCode().equals(RequestCode.ERROR)){
+        if(response.getStatusCode().equals(StatusCode.ERROR)){
             Util.showAlert("error", response.getData().toString(), "");
-        }else if(response.getRequestCode().equals(RequestCode.OK)){
+        }else if(response.getStatusCode().equals(StatusCode.OK)){
             player = (Player) response.getData();
             MainConfig.setUser(player);
             Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/Menu.fxml"));

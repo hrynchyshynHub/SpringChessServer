@@ -2,11 +2,15 @@ package network.model;
 
 import java.io.Serializable;
 
-public class NetworkGameBoard implements Serializable{
+public class NetworkGameBoard implements Serializable {
     private Integer id;
     private Player firstPlayer;
     private Player secondPlayer;
 
+
+    public NetworkGameBoard(Integer id) {
+        this.id = id;
+    }
 
     public NetworkGameBoard(Integer id, Player firstPlayer, Player secondPlayer) {
         this.id = id;
